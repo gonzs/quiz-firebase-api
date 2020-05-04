@@ -30,8 +30,8 @@ app.post("/api/add-question", (req, res) => {
         .doc("/" + req.body.id + "/")
         .create({
           title: req.body.title,
-          type: req.body.type,
           correct: req.body.correct,
+          options: req.body.options || [],
         });
 
       return res.status(200).send();
@@ -51,13 +51,13 @@ app.get("/api/:subject", (req, res) => {
 
       await document.get().then((querySnapshot) => {
         let docs = querySnapshot.docs;
-        console.log(docs);
+
         for (let doc of docs) {
           const selItem = {
             id: doc.id,
             title: doc.data().title,
-            type: doc.data().type,
             correct: doc.data().correct,
+            options: doc.data().options,
           };
           response.push(selItem);
         }
