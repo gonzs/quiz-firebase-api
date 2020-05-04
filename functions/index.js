@@ -72,5 +72,22 @@ app.get("/api/:subject", (req, res) => {
   })();
 });
 
+// Save results - POST
+app.post("/api/results", (req, res) => {
+  (async () => {
+    try {
+      await db.collection("results").doc().create({
+        subject: req.body.subject,
+        score: req.body.score,
+      });
+
+      return res.status(200).send();
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
 // * Export API to cloud functions
 exports.app = functions.https.onRequest(app);
