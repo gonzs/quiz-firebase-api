@@ -18,7 +18,7 @@ const db = admin.firestore();
 
 // test - GET
 app.get("/test", (req, res) => {
-  return res.status(200).send("Hello from Firebase!");
+  return res.status(200).send("Hello from Firebase!!!");
 });
 
 // Create - POST
