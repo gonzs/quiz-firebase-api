@@ -10,7 +10,7 @@ admin.initializeApp();
 const app = express();
 app.use(bodyParser.json());
 app.use(cors({ origin: true }));
-    
+
 routesConfig(app);
 
 export const api = functions.https.onRequest(app);
