@@ -6,7 +6,7 @@ import {
   saveResults
 } from './controller';
 
-export function routesConfig(app: Application) {
+export function routesConfigQuiz(app: Application) {
   // GET - test
   app.get('/test', testFirebase);
 

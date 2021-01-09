@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as admin from 'firebase-admin';
 
-export function testFirebase(req: Request, res: Response) {
+export async function testFirebase(req: Request, res: Response) {
   return res.status(200).send('Hello from Firebase!!!');
 }
 
