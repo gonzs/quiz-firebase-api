@@ -13,7 +13,7 @@ export async function addQuestion(req: Request, res: Response) {
 
     await db
       .collection(subject)
-      .doc('/' + id + '/')
+      .doc(`/${id}/`)
       .create({
         title: title,
         correct: correct,
@@ -59,13 +59,25 @@ export async function getQuizBySubject(req: Request, res: Response) {
 
 export async function saveResults(req: Request, res: Response) {
   const db = admin.firestore();
-  const { subject, score } = req.body;
+  const { email, subject, score } = req.body;
 
   try {
-    await db
-      .collection('results')
-      .doc()
-      .create({ subject: subject, score: score });
+    const resultsByEmailSubject = await db
+      .collection(`results`)
+      .doc(`/${email}-${subject}/`);
+
+    const getDoc = await resultsByEmailSubject.get();
+
+    if (getDoc.exists)
+      await db
+        .collection(`results`)
+        .doc(`/${email}-${subject}/`)
+        .set({ score });
+    else
+      await db
+        .collection(`results`)
+        .doc(`/${email}-${subject}/`)
+        .create({ score });
 
     return res.status(200).send();
   } catch (error) {
