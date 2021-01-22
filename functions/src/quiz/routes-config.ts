@@ -13,8 +13,8 @@ export function routesConfigQuiz(app: Application) {
   // GET - test
   app.get('/test', testFirebase);
 
-  // POST - Set role to the user registered
-  app.post('/role', isAuthenticated, setUserRole);
+  // GET - Set role to the user registered
+  app.get('/role:uid', setUserRole);
 
   // GET -  Quiz for a :subject
   app.get(

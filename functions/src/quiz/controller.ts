@@ -8,7 +8,7 @@ export async function testFirebase(req: Request, res: Response) {
 export async function setUserRole(req: Request, res: Response) {
   try {
     const auth = admin.auth();
-    const { uid } = res.locals;
+    const { uid } = req.params;
     const role = 'user';
 
     await auth.setCustomUserClaims(uid, { role });
