@@ -10,10 +10,10 @@ export function isAuthorized(opts: {
 
     if (opts.allowSameUser && id && uid === id) return next();
 
-    if (!role) return res.status(403).send(`${role} - ${res.locals}`);
+    if (!role) return res.status(403).send();
 
     if (opts.hasRole.includes(role)) return next();
 
-    return res.status(403).send('console 2');
+    return res.status(403).send();
   };
 }
