@@ -1,4 +1,4 @@
-## QUIZ GAME API
+# QUIZ GAME API
 
 This application is a Rest API for [Quiz Game](https://github.com/gonzs/quiz).
 
