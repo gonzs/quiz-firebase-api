@@ -19,7 +19,7 @@ export function routesConfigQuiz(app: Application) {
 
   // GET -  Quiz for a :subject
   app.get(
-    '/:subject',
+    '/subj/:subject',
     isAuthenticated,
     isAuthorized({ hasRole: ['admin', 'manager', 'user'] }),
     getQuizBySubject
