@@ -4,7 +4,8 @@ import {
   addQuestion,
   getQuizBySubject,
   testFirebase,
-  saveResults
+  saveResults,
+  getSubjects
 } from './controller';
 import { isAuthenticated } from '../auth/authenticated';
 import { isAuthorized } from '../auth/authorized';
@@ -22,6 +23,14 @@ export function routesConfigQuiz(app: Application) {
     isAuthenticated,
     isAuthorized({ hasRole: ['admin', 'manager', 'user'] }),
     getQuizBySubject
+  );
+
+  // GET -  Get Subjects
+  app.get(
+    '/subjects',
+    isAuthenticated,
+    isAuthorized({ hasRole: ['admin', 'manager', 'user'] }),
+    getSubjects
   );
 
   // POST - Create new question for a subject

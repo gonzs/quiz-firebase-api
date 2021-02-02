@@ -44,21 +44,18 @@ export async function getQuizBySubject(req: Request, res: Response) {
     const db = admin.firestore();
     const { subject } = req.params;
     const document = db.collection(subject);
-    const response: Array<any> = [];
 
-    await document.get().then((querySnapshot) => {
+    const response: Array<any> = await document.get().then((querySnapshot) => {
       const docs = querySnapshot.docs;
 
-      for (const doc of docs) {
-        const selItem = {
-          id: doc.id,
-          title: doc.data().title,
-          correct: doc.data().correct,
-          options: doc.data().options
-        };
-        response.push(selItem);
-      }
-      return response;
+      const responseItem = docs.map((doc) => ({
+        id: doc.id,
+        title: doc.data().title,
+        correct: doc.data().correct,
+        options: doc.data().options
+      }));
+
+      return responseItem;
     });
 
     return res.status(200).send(response);
@@ -90,6 +87,27 @@ export async function saveResults(req: Request, res: Response) {
         .create({ score });
 
     return res.status(200).send();
+  } catch (error) {
+    return handleError(res, error);
+  }
+}
+
+export async function getSubjects(req: Request, res: Response) {
+  try {
+    const db = admin.firestore();
+    const document = db.collection(`subjects`);
+
+    const response: Array<any> = await document.get().then((querySnapshot) => {
+      const docs = querySnapshot.docs;
+
+      const responseItem = docs.map((doc) => ({
+        id: doc.id
+      }));
+
+      return responseItem;
+    });
+
+    return res.status(200).send(response);
   } catch (error) {
     return handleError(res, error);
   }
