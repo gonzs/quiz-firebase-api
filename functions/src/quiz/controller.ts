@@ -67,7 +67,8 @@ export async function getQuizBySubject(req: Request, res: Response) {
 export async function saveResults(req: Request, res: Response) {
   try {
     const db = admin.firestore();
-    const { email, subject, score } = req.body;
+    const { subject, score } = req.body;
+    const { email } = res.locals;
 
     const resultsByEmailSubject = await db
       .collection(`results`)
