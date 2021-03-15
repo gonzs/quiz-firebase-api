@@ -39,6 +39,35 @@ export async function addQuestion(req: Request, res: Response) {
   }
 }
 
+export async function addQuiz(req: Request, res: Response) {
+  try {
+    const db = admin.firestore();
+    const { quizName, questions } = req.body;
+    const { email } = res.locals;
+
+    await db
+      .collection('subjects')
+      .doc(`/${quizName}/`)
+      .create({ created: email });
+
+    for (let i = 0; i < questions.length; i++) {
+      const question = questions[i];
+
+      await db
+        .collection(quizName)
+        .doc(`/${i + 1}/`)
+        .create({
+          title: question.title,
+          correct: question.correct,
+          options: question.options || []
+        });
+    }
+    return res.status(200).send();
+  } catch (error) {
+    return handleError(res, error);
+  }
+}
+
 export async function getQuizBySubject(req: Request, res: Response) {
   try {
     const db = admin.firestore();
